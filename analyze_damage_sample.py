@@ -21,7 +21,6 @@ LABEL_PATH = ROOT / "ukraine_sample" / "labels" / "rubizhne_post_0003.json"
 MEASUREMENTS_PATH = ROOT / "damage_measurements.csv"
 ANNOTATED_PATH = ROOT / "damage_annotations.png"
 PAIR_PREVIEW_PATH = ROOT / "pre_post_comparison.png"
-SCENE_PREVIEW_PATH = ROOT / "scene_preview.png"
 GEOREFERENCED_PATH = ROOT / "rubizhne_post_0003_georef.tif"
 CRS = "EPSG:32637"
 
@@ -151,9 +150,8 @@ def main():
             writer.writerow(
                 {key: value for key, value in row.items() if key != "polygon"}
             )
-
     image = Image.open(IMAGE_PATH).convert("RGB")
-    image.save(SCENE_PREVIEW_PATH)
+    image = Image.open(IMAGE_PATH).convert("RGB")
     draw = ImageDraw.Draw(image)
     font = ImageFont.load_default()
     colors = {"minor": "#00a6ff", "major": "#ffd400", "destroyed": "#ff3b30"}
@@ -226,8 +224,7 @@ def main():
         )
     print(
         f"Saved {MEASUREMENTS_PATH.name}, {ANNOTATED_PATH.name}, "
-        f"{PAIR_PREVIEW_PATH.name}, {SCENE_PREVIEW_PATH.name}, "
-        f"and {GEOREFERENCED_PATH.name}"
+        f"{PAIR_PREVIEW_PATH.name}, and {GEOREFERENCED_PATH.name}"
     )
 
 

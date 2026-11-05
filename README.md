@@ -14,8 +14,6 @@ lab1/
 ├── inspect_scene.py
 ├── analyze_damage_sample.py
 ├── aoi.geojson
-├── irpin_sentinel2_20220415.tif
-├── scene_preview.png
 ├── ukraine_sample/         # знімки Rubizhne та JSON-анотації
 ├── rubizhne_post_0003_georef.tif
 ├── damage_measurements.csv
@@ -23,13 +21,11 @@ lab1/
 ├── pre_post_comparison.png
 ├── scene_report.txt
 ├── histograms.png
-├── LR1_Variant2_Final.docx
-└── main.py
+└── LR1_Variant2_Final.docx
 ```
 
 `LR1_Variant2_Final.docx` — виправлена копія звіту; початковий DOCX залишився
-локально без змін і до репозиторію не додається. `main.py` — початковий шаблон IDE; для огляду знімка використовуйте
-`inspect_scene.py`.
+локально без змін і до репозиторію не додається.
 
 ## Приклад знімка
 
@@ -47,9 +43,6 @@ pre/post та полігональними мітками у `ukraine_sample/lab
 У фрагменті 85 анотацій будівель після події: 75 без пошкоджень, 3 minor,
 4 major, 3 destroyed; окремих міток куп завалу немає. CSV містить виміри
 п'яти анотованих будівель, а `damage_annotations.png` показує межі цих полігонів.
-
-`irpin_sentinel2_20220415.tif` збережено як додатковий контрастний приклад
-низькодетального скринінгу, але основний кейс і AOI тепер — Рубіжне.
 
 ## Встановлення та запуск
 
@@ -81,7 +74,6 @@ python inspect_scene.py chip.png --gsd 0.5 --objects "будинок=12" "зав
 створює GeoTIFF для QGIS та ілюстрації. Точна дата знімання у джерелі відсутня.
 
 Скрипт створює в поточній директорії `scene_report.txt` і `histograms.png`.
-`scene_preview.png` — RGB-візуалізація цієї AOI.
 Для GeoTIFF із проєктованою CRS GSD береться з розміру пікселя та одиниць CRS;
 для географічної CRS розрахунок приблизний. Параметр `--gsd` задає однаковий
 розмір пікселя по обох осях і має використовуватися для незареєстрованих зображень.
