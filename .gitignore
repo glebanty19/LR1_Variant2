@@ -1,0 +1,7 @@
+.idea/
+.venv/
+__pycache__/
+*.py[cod]
+scene_report.txt
+histograms.png
+sentinel_test.tif
