@@ -24,9 +24,13 @@ def parse_object(value):
 
 def get_pixel_size_m(src, override):
     if override is not None:
-        if not math.isfinite(override) or override <= 0:
-            raise ValueError("--gsd має бути додатним числом")
-        return override, override, "задано вручну"
+        if len(override) not in (1, 2):
+            raise ValueError("--gsd приймає одне число або пару GSD_X GSD_Y")
+        if any(not math.isfinite(value) or value <= 0 for value in override):
+            raise ValueError("--gsd має містити додатні числа")
+        gsd_x = override[0]
+        gsd_y = override[-1]
+        return gsd_x, gsd_y, "задано вручну"
 
     if src.crs is None:
         raise ValueError("у файлі немає CRS; задайте GSD параметром --gsd")
@@ -60,7 +64,8 @@ def main():
     parser.add_argument(
         "--gsd",
         type=float,
-        help="розмір пікселя у метрах; задайте для знімків без геоприв'язки",
+        nargs="+",
+        help="розмір пікселя у метрах: одне число або пара GSD_X GSD_Y",
     )
     parser.add_argument(
         "--objects",
@@ -95,9 +100,12 @@ def main():
             print(f"Розмір (пкс):      {src.width} x {src.height}")
             print(f"Кількість каналів: {src.count}")
             print(f"Тип даних:         {', '.join(src.dtypes)}")
-            acquisition_date = src.tags().get("ACQUISITION_DATE")
+            tags = src.tags()
+            acquisition_date = tags.get("ACQUISITION_DATE") or tags.get("DATETIME")
             if acquisition_date:
                 print(f"Дата знімання:     {acquisition_date}")
+            elif tags.get("CAPTURE_DATE_AVAILABLE", "").lower().startswith("no"):
+                print("Дата знімання:     не зазначена в метаданих джерела")
 
             gsd_x, gsd_y, gsd_source = get_pixel_size_m(src, args.gsd)
             gsd = math.sqrt(gsd_x * gsd_y)
@@ -139,6 +147,17 @@ def main():
                 )
                 if acquisition_date:
                     report.write(f"Дата знімання: {acquisition_date}\n")
+                elif tags.get("CAPTURE_DATE_AVAILABLE", "").lower().startswith("no"):
+                    report.write(
+                        "Дата знімання: не зазначена в метаданих джерела\n"
+                    )
+                if tags.get("SOURCE_IMAGE"):
+                    report.write(f"Вихідне зображення: {tags['SOURCE_IMAGE']}\n")
+                if tags.get("GEOREFERENCE_METHOD"):
+                    report.write(
+                        "Метод геоприв'язки: "
+                        f"{tags['GEOREFERENCE_METHOD']}\n"
+                    )
                 report.write("\n")
                 report.write("Об'єкти:\n")
                 for name, size in args.objects:

@@ -1,11 +1,23 @@
-Файл: .\irpin_sentinel2_20220415.tif
-CRS: EPSG:32636
-GSD X/Y: 10.294 / 10.374 м (metre)
-Розмір: 100×100 пкс / 1.03×1.04 км
-Канали: 4, тип: uint16, uint16, uint16, uint16
+Файл: rubizhne_post_0003_georef.tif
+CRS: EPSG:32637
+GSD X/Y: 0.575 / 0.874 м (metre)
+Розмір: 1024×1024 пкс / 0.59×0.89 км
+Канали: 4, тип: uint8, uint8, uint8, uint8
 
-Дата знімання: 2022-04-15T09:05:49Z
+Дата знімання: не зазначена в метаданих джерела
+Вихідне зображення: rubizhne_post_0003.png
+Метод геоприв'язки: Least-squares affine fit from matching pixel and lon/lat building annotation vertices
 
 Об'єкти:
-  малий будинок: 6 м -> 0.6 пкс
-  купа завалу: 3 м -> 0.3 пкс
+  minor: 7 м -> 9.9 пкс
+  major: 15 м -> 21.2 пкс
+  destroyed: 25 м -> 35.3 пкс
+
+Дані та обмеження:
+  Джерело: xBD Ukraine Destruction Analysis, Rubizhne post-event PNG.
+  Дата знімання: у картці й файлах джерела не зазначена.
+  Геоприв'язка: похідна; афінна апроксимація 538 пар вершин анотацій,
+  RMS залишок 0.0048 м. CRS/GSD не є оригінальними метаданими знімка.
+  Post-event анотації: 75 no-damage, 3 minor, 4 major, 3 destroyed.
+  Окремих анотацій debris heap немає; мітки не є наземною валідацією.
+  П'ять розмірів анотованих будівель наведено у damage_measurements.csv.
